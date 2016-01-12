@@ -13,5 +13,6 @@
 
 int * mandelbrot_binary(float x[SIZE], float y[SIZE]);
 int * mandelbrot_escape(float x[SIZE], float y[SIZE]);
+void renderMandelbrot(int renderType);
 
 #endif

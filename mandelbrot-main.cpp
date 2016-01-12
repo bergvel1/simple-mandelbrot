@@ -1,43 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bmp.h"
+#include <QImage>
+#include <QString>
 #include "mandelbrot.h"
 #include <cmath>
 
-void
+bool
 create_image_binary(int *ret, const char *name) {
-	bmp image(WIDTH, HEIGHT);
+    QImage image(WIDTH, HEIGHT, QImage::Format_Mono);
+
+    //setup color table
+    QRgb value;
+    value = qRgb(0, 0, 0); //0xff000000
+    image.setColor(0, value);
+    value = qRgb(255, 255, 255); //0xffffffff
+    image.setColor(1,value);
+
 	for (int y = 0; y < HEIGHT; ++y) {
 		for (int x = 0; x < WIDTH; ++x) {
 			// white for points out of set, black for points in set
-			uint8_t color = !ret[y * WIDTH + x] * 255;
-			pixel p = { color, color, color };
-			*image(x, y) = p;
+            image.setPixel(x,y,!(ret[(y*WIDTH) + x]));
 		}
 	}
 
-	image.write_to_file(name);
+    return image.save(QString(name), 0, -1);
 }
 
-void
+bool
 create_image_bw(int *ret, const char *name) {
-	bmp image(WIDTH, HEIGHT);
+    QImage image(WIDTH, HEIGHT, QImage::Format_RGB32);
 	for (int y = 0; y < HEIGHT; ++y) {
 		for (int x = 0; x < WIDTH; ++x) {
-			// white for points out of set, black for points in set
+            // white for points in set, gradient to black for iterations until divergence
+            QRgb value;
 			uint8_t color = ret[y * WIDTH + x];
-			pixel p = { color, color, color };
-			*image(x, y) = p;
+            value = qRgb(color, color, color);
+            image.setPixel(x, y, value);
 		}
 	}
 
-	image.write_to_file(name);
+    return image.save(QString(name), 0 , -1);
 }
 
-void
+
+bool
 create_image_color(int *ret, const char *name) {
   float frequency = 0.3/(colorDepth/32);
-  pixel rainbow[colorDepth];
+  QRgb rainbow[colorDepth];
   
   for(int i = 0; i < colorDepth; i++){
     //generate 32 rainbow colors with detuned sines
@@ -45,34 +55,34 @@ create_image_color(int *ret, const char *name) {
     uint8_t green = sin(frequency*i + 2)*127 + 128;
     uint8_t blue = sin(frequency*i + 4)*127 + 128;
 
-    pixel curr = {red, green, blue};
+    QRgb curr = qRgb(red, green, blue);
 
     rainbow[i] = curr;
   }
 
   
-	bmp image(WIDTH, HEIGHT);
+    QImage image(WIDTH, HEIGHT, QImage::Format_RGB32);
 	for (int y = 0; y < HEIGHT; ++y) {
 		for (int x = 0; x < WIDTH; ++x) {
-			uint8_t color = ret[y * WIDTH + x];
-			pixel p;
+            uint8_t escapeIter = ret[y * WIDTH + x];
+            QRgb value;
 
-			if(color == 255){
-			  p = { color, color, color };
+            if(escapeIter == 255){
+              value = qRgb(escapeIter, escapeIter, escapeIter);
 			}
 
 			else{
-			  p = rainbow[color%colorDepth];
+              value = rainbow[escapeIter%colorDepth];
 			}
 			
-			*image(x, y) = p;
+            image.setPixel(x, y, value);
 		}
 	}
 
-	image.write_to_file(name);
+    return image.save(QString(name), 0 , -1);
 }
 
-int main(int argc, char **argv) {
+void renderMandelbrot(int renderType) {
 	static float x_coords[SIZE];
 	static float y_coords[SIZE];
 
@@ -87,12 +97,17 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	int *binary_ret = mandelbrot_binary(x_coords, y_coords);
-	int *escape_ret = mandelbrot_escape(x_coords, y_coords);
+    if(renderType == 0){
+        int *binary_ret = mandelbrot_binary(x_coords, y_coords);
+        create_image_binary(binary_ret, "mandelbrot-binary.bmp");
+    }
+    else{
+        int *escape_ret = mandelbrot_escape(x_coords, y_coords);
 
-	create_image_binary(binary_ret, "mandelbrot-binary.bmp");
-	create_image_bw(escape_ret, "mandelbrot-escape-bw.bmp");
-	create_image_color(escape_ret, "mandelbrot-escape-color.bmp");
+        if(renderType == 1)
+            create_image_bw(escape_ret, "mandelbrot-escape-bw.bmp");
+        else
+            create_image_color(escape_ret, "mandelbrot-escape-color.bmp");
+    }
 
-	return 0;
 }
