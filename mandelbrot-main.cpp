@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "bmp.h"
 #include <QImage>
 #include <QString>
 #include "mandelbrot.h"
 #include <cmath>
+
+typedef unsigned char     uint8_t;  //for some reason this is necessary in windows
 
 bool
 create_image_binary(int *ret, const char *name) {

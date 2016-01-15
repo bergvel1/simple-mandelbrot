@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>774</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>130</y>
+      <x>680</x>
+      <y>430</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>110</y>
+      <x>650</x>
+      <y>410</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
+      <x>580</x>
+      <y>430</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>220</y>
+      <x>0</x>
+      <y>430</y>
       <width>381</width>
       <height>23</height>
      </rect>
@@ -69,8 +69,8 @@
    <widget class="QComboBox" name="renderTypeBox">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>130</y>
+      <x>390</x>
+      <y>430</y>
       <width>171</width>
       <height>22</height>
      </rect>
@@ -94,13 +94,23 @@
      </property>
     </item>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>751</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>774</width>
      <height>21</height>
     </rect>
    </property>
