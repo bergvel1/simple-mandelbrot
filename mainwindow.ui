@@ -14,11 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="fileRenderButton">
     <property name="geometry">
      <rect>
       <x>680</x>
-      <y>430</y>
+      <y>440</y>
       <width>81</width>
       <height>23</height>
      </rect>
@@ -27,24 +27,11 @@
      <string>Render to file</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>410</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="screenRenderButton">
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>430</y>
+      <y>440</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -57,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>430</y>
+      <y>440</y>
       <width>381</width>
       <height>23</height>
      </rect>
@@ -70,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>430</y>
+      <y>440</y>
       <width>171</width>
       <height>22</height>
      </rect>
@@ -94,13 +81,13 @@
      </property>
     </item>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="mainImage">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>751</width>
-      <height>411</height>
+      <width>771</width>
+      <height>431</height>
      </rect>
     </property>
    </widget>

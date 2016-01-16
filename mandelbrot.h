@@ -11,8 +11,10 @@
 #define	M_MAG	2.0
 #define colorDepth 32
 
+#include <QImage>
+
 int * mandelbrot_binary(float x[SIZE], float y[SIZE]);
 int * mandelbrot_escape(float x[SIZE], float y[SIZE]);
-void renderMandelbrot(int renderType);
+QImage renderMandelbrot(int renderType);
 
 #endif

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
 
 namespace Ui {
 class MainWindow;
@@ -16,10 +17,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_fileRenderButton_clicked();
+    void on_screenRenderButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;  //pointer to image displayed on screen
+    QPixmap image;
 };
 
 #endif // MAINWINDOW_H
