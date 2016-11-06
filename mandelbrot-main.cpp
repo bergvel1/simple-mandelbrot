@@ -3,6 +3,7 @@
 #include "bmp.h"
 #include "mandelbrot.h"
 #include <cmath>
+#include <iostream> 
 
 void
 create_image_binary(int *ret, const char *name) {
@@ -58,7 +59,9 @@ create_image_color(int *ret, const char *name) {
 			pixel p;
 
 			if(color == 255){
-			  p = { color, color, color };
+			  p.blue = color;
+			  p.green = color;
+			  p.red = color;
 			}
 
 			else{
@@ -72,27 +75,75 @@ create_image_color(int *ret, const char *name) {
 	image.write_to_file(name);
 }
 
+// ARGUMENTS
+// 1. Filename
+// 2. Render type
+// 3. x center
+// 4. y center
+// 5. zoom factor
 int main(int argc, char **argv) {
-	static float x_coords[SIZE];
-	static float y_coords[SIZE];
+    const char * filename;
+    int render_type;
+    double center_x;
+	double center_y; 
+	double zoom_factor;
+	  
+    if (argc == 1){
+    	std::cout << "Running with default settings..." << std::endl;
+    	filename = "render.bmp";
+    	render_type = 1;
+    	center_x = -0.5;
+    	center_y = 0.0;
+    	zoom_factor = 1.0;
+    }
+    else if (argc == 6){
+    	std::cout << "Running with user settings..." << std::endl;
+    	filename = argv[1];
+    	render_type = atoi(argv[2]);
+    	center_x = strtod(argv[3],NULL);
+    	center_y = strtod(argv[4],NULL);
+    	zoom_factor = strtod(argv[5],NULL);
+    }
+    else{
+    	std::cout << "Welcome to my simple Mandelbrot renderer!" << std::endl;
+    	std::cout << "This program takes five arguments:" << std::endl;
+    	std::cout << "\t1. A filename (default render.bmp)" << std::endl;
+    	std::cout << "\t2. An integer indicating the render type, with three possible options:" << std::endl;
+    	std::cout << "\t\t0: a binary b/w render" << std::endl;
+    	std::cout << "\t\t1: a b/w escape iteration render (default option)" << std::endl;
+    	std::cout << "\t\t2: a color escape iteration render" << std::endl;
+    	std::cout << "\t3. A float describing the center x coordinate (default -0.5)" << std::endl;
+    	std::cout << "\t4. A float describing the center y coordinate (default 0.0)" << std::endl;
+    	std::cout << "\t5. The zoom factor, given as a float (default 1.0)" << std::endl;
+    	std::cout << "Alternatively, you may run this program with no arguments, and default options will be used" << std::endl;
+    	return 1;
+    }
 
-	// y axis goes from 1 to -1
-	// x axis goes from -2 to 1
-	for (int y = 0; y < HEIGHT; ++y) {
-		float y_coord = 1.0 - (y * 2.0 / (HEIGHT - 1));
-		for (int x = 0; x < WIDTH; ++x) {
-			float x_coord = -2.0 + (x * 3.0 / (WIDTH - 1));
-			x_coords[y * WIDTH + x] = x_coord;
-			y_coords[y * WIDTH + x] = y_coord;
-		}
+	static double x_coords[WIDTH];
+	static double y_coords[HEIGHT];
+
+	double y_low = center_y-(1.0/zoom_factor); //  -1.0
+	double y_high = center_y+(1.0/zoom_factor); //  1.0
+	double x_low = center_x - (1.5/zoom_factor); // -2.0
+	double x_high = center_x + (1.5/zoom_factor); //  1.0
+
+	for (int y = 0; y < HEIGHT; ++y){
+		y_coords[y] = y_high - (y * (-1.0*(y_low-y_high)) / (HEIGHT - 1));
 	}
 
-	int *binary_ret = mandelbrot_binary(x_coords, y_coords);
-	int *escape_ret = mandelbrot_escape(x_coords, y_coords);
+	for (int x = 0; x < WIDTH; ++x){
+		x_coords[x] = x_low + (x * (x_high-x_low) / (WIDTH - 1));
+	}
 
-	create_image_binary(binary_ret, "mandelbrot-binary.bmp");
-	create_image_bw(escape_ret, "mandelbrot-escape-bw.bmp");
-	create_image_color(escape_ret, "mandelbrot-escape-color.bmp");
+	if(render_type == 0){
+		int *binary_ret = mandelbrot_binary(x_coords, y_coords);
+		create_image_binary(binary_ret, filename);
+	}
+	else{
+		int *escape_ret = mandelbrot_escape(x_coords, y_coords);
+		if(render_type == 1) create_image_bw(escape_ret, filename);
+		else create_image_color(escape_ret, filename);
+	}
 
 	return 0;
 }

@@ -11,7 +11,7 @@
 #define	M_MAG	2.0
 #define colorDepth 32
 
-int * mandelbrot_binary(float x[SIZE], float y[SIZE]);
-int * mandelbrot_escape(float x[SIZE], float y[SIZE]);
+int * mandelbrot_binary(double x_coords[WIDTH], double y_coords[HEIGHT]);
+int * mandelbrot_escape(double x_coords[WIDTH], double y_coords[HEIGHT]);
 
 #endif
