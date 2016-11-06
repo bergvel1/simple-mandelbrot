@@ -15,4 +15,5 @@ This program takes five arguments:
 
 Alternatively, you may run this program with no arguments, and default options will be used.
 
+[!image](http://i.imgur.com/gBWQZva.jpg)
 
