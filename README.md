@@ -1,8 +1,6 @@
 # simple-mandelbrot
 Winter break coding project, a simple Mandelbrot set rendering program.
 
-More recently, I have been doing work in the "commandline" branch.
-
 # how to use
 This program takes five arguments:
   1. A filename (default render.bmp)
@@ -15,6 +13,9 @@ This program takes five arguments:
   5. The zoom factor, given as a float (default 1.0)
 
 Alternatively, you may run this program with no arguments, and default options will be used.
+
+# other notes
+I recommend testing out different values for M_ITER in mandelbrot.h when doing deep zooms. Depending on how large of a zoom factor you're trying to use, you'll probably want to increase the number of iterations. I think there's a way to calculate the ideal number to use, so I'll probably automate this at some point.
 
 # some pictures
 ![Alt text](/render.bmp?raw=true "Optional Title")
