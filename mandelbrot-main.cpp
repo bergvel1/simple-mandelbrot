@@ -58,10 +58,10 @@ create_image_color(int *ret, const char *name) {
 			uint8_t color = ret[y * WIDTH + x];
 			pixel p;
 
-			if(color == 255){
-			  p.blue = color;
-			  p.green = color;
-			  p.red = color;
+			if(color == M_ITER){
+			  p.blue = 255;
+			  p.green = 255;
+			  p.red = 255;
 			}
 
 			else{
