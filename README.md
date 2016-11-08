@@ -3,6 +3,7 @@ Winter break coding project, a simple Mandelbrot set rendering program.
 
 More recently, I have been doing work in the "commandline" branch.
 
+# how to use
 This program takes five arguments:
   1. A filename (default render.bmp)
   2. An integer indicating the render type, with three possible options:
@@ -15,5 +16,6 @@ This program takes five arguments:
 
 Alternatively, you may run this program with no arguments, and default options will be used.
 
-[!image](http://i.imgur.com/gBWQZva.jpg)
-
+# some pictures
+![Alt text](/render.bmp?raw=true "Optional Title")
+![Alt text](/render2.bmp?raw=true "Optional Title")
